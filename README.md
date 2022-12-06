@@ -1,4 +1,4 @@
-# Module-1-Capstone-Project
+# To do list app
 <a name="readme-top"></a>
 
 <div align="center">
