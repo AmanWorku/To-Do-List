@@ -10,62 +10,76 @@ body {
   max-width: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  margin: 200px auto;
+  background-color: #ffffff;
+  margin: 60px auto;
+  padding: 20px;
 }
 
 .container h1 {
   font-size: 2em;
   font-weight: bolder;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
 }
 
 .form .head {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 100px;
-}
-
-.head p {
-  align-self: flex-start;
+  justify-content: space-between;
 }
 
 .head i {
-  align-self: center;
+  padding: 16px 0;
 }
 
+.form ul {
+  margin: 0;
+  padding: 20px 0;
+}
 .lists li {
   display: flex;
   flex-direction: row;
   height: 50px;
+  justify-content: space-between;
+}
+
+form {
+  width: 100%;
+  display: flex;
   gap: 20px;
 }
 
-li .toggle {
-  align-self: center;
-  height: 15px;
-  width: 10px;
-  cursor: pointer;
+form .add{
+  background: none;
+  border: none;
 }
 
-form .input-list {
+form i{
+  font-size: 1.35em;
+  padding-top: 8px;
+  cursor: pointer;
+  margin-right: -10px;
+}
+
+form i:hover{
+  transition: 0.3s ease;
+  color: #184e9e;
+}
+
+
+form .task-input {
+  width: 100%;
   padding: 10px 10px;
   border: none;
-  border-bottom: 1px solid rgb(52, 52, 52);
+  border-bottom: 1px solid rgb(104, 104, 104);
 }
 
-form .input-list::placeholder {
+form .task-input::placeholder {
   color: rgb(102, 102, 102);
   font-style: italic;
   opacity: 0.7;
@@ -83,4 +97,15 @@ form .input-list::placeholder {
 .clear:hover {
   transition: 0.4s ease;
   background-color: rgb(192, 192, 192);
+}
+
+.lists .left{
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+  margin: 0;
+}
+
+.menu-pop .btn {
+  display: none;
 }
