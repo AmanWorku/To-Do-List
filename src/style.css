@@ -10,7 +10,7 @@ body {
   max-width: 65%;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: #fff;
   margin: 60px auto;
   padding: 20px;
 }
@@ -33,6 +33,13 @@ body {
   justify-content: space-between;
 }
 
+form i {
+  font-size: 1.35em;
+  padding-top: 8px;
+  cursor: pointer;
+  margin-right: -10px;
+}
+
 .head i {
   padding: 16px 0;
 }
@@ -41,6 +48,7 @@ body {
   margin: 0;
   padding: 20px 0;
 }
+
 .lists li {
   display: flex;
   flex-direction: row;
@@ -54,23 +62,15 @@ form {
   gap: 20px;
 }
 
-form .add{
+form .add {
   background: none;
   border: none;
 }
 
-form i{
-  font-size: 1.35em;
-  padding-top: 8px;
-  cursor: pointer;
-  margin-right: -10px;
-}
-
-form i:hover{
+form i:hover {
   transition: 0.3s ease;
   color: #184e9e;
 }
-
 
 form .task-input {
   width: 100%;
@@ -106,7 +106,7 @@ form .task-input:focus {
   background-color: rgb(192, 192, 192);
 }
 
-.lists .left{
+.lists .left {
   display: flex;
   flex-direction: row;
   gap: 7px;
