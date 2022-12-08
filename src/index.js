@@ -3,6 +3,11 @@ import './style.css';
 let newTask = document.querySelector('.task-input')
 const add = document.querySelector('.add');
 const list = document.querySelector('.lists');
+const reload = document.querySelector('.fa-arrows-rotate');
+
+reload.addEventListener('click' , () => {
+  showTasks();
+})
 
 
 let taskList = JSON.parse(localStorage.getItem('data')) || [];
@@ -50,24 +55,6 @@ window.completeTask = function (index){
   showTasks();
 }
 
-window.editTask = function (index){
-  console.log("wihiiii");
-}
-
-//delete task function
-
-window.deleteTask = function (index){
-  let storedData = localStorage.getItem('data');
-  listArr = JSON.parse(storedData);
-  listArr.splice(index-1,1);
-  for (let i = index+1 ; i < listArr.length ; i++) {
-    listArr[i+1].index = i+1;
-  }
-
-  localStorage.setItem('data', JSON.stringify(listArr));
-  showTasks();
-
-}
 
 function showTasks(){
   let storedData = localStorage.getItem('data');
@@ -85,19 +72,71 @@ function showTasks(){
     newLiTag += `<li>
        <div class="left">
        <input type="checkbox" onclick="completeTask(${element.index});">
-       <p class="taks${element.index}">${element.description}</p>
+       <input type="text" class="task" id="task${element.index}" value="${element.description}" readonly>
        </div>
        <div class="right">
-       <button class="edit" onclick="editTask(${element.index});">Edit</button>
-       <button class="delete" onclick="deleteTask(${element.index});">Delete</button>       
+       <i class="fa-solid fa-pen-to-square edit " id="edit${element.index}" onclick="editTask(${element.index});"></i>
+       <i class="fa-solid fa-floppy-disk save hide" id="save${element.index}" onclick="saveTask(${element.index});"></i>
+       <i class="fa-solid fa-trash delete" onclick="deleteTask(${element.index});"></i>       
 </div>
-       </li>`;
+       </li><hr>`;
   });
   list.innerHTML = newLiTag;
 }
 
 
+window.editTask = (index) => {
+  const saveBtn = document.getElementById("edit"+index+"");
+  const editBtn = document.getElementById("save"+index+"");
 
+  saveBtn.style.display = "none";
+  editBtn.style.display = "block";
+
+  const specTask = document.getElementById("task"+index+"");
+
+  specTask.removeAttribute('readonly');
+  const length = specTask.value.length;
+  specTask.setSelectionRange(length, length);
+  specTask.focus();
+
+  return specTask;
+
+}
+
+
+
+window.saveTask = (index) => {
+  const saveBtn = document.getElementById("edit"+index+"");
+  const editBtn = document.getElementById("save"+index+"");
+
+  saveBtn.style.display = "block";
+  editBtn.style.display = "none";
+
+  const specTask = document.getElementById("task"+index+"");
+    let storedData = localStorage.getItem('data');
+    listArr = JSON.parse(storedData);
+    listArr[index-1].description = specTask.value;
+
+
+  localStorage.setItem('data', JSON.stringify(listArr));
+  showTasks();
+}
+
+
+//delete task function
+
+window.deleteTask =  (index) => {
+  let storedData = localStorage.getItem('data');
+  listArr = JSON.parse(storedData);
+  listArr.splice(index-1,1);
+  for (let i = 0 ; i < listArr.length ; i++) {
+    listArr[i].index = i+1;
+  }
+
+  localStorage.setItem('data', JSON.stringify(listArr));
+  showTasks();
+
+}
 
 
 //
