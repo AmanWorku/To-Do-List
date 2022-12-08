@@ -1,18 +1,20 @@
 import './style.css';
 
-let newTask = document.querySelector('.task-input')
-const add = document.querySelector('.add');
-const list = document.querySelector('.lists');
-const reload = document.querySelector('.fa-arrows-rotate');
+import {deleteTask} from "./deleteTask.js";
+import {showTasks,reload} from "./showTask.js";
+
+export let newTask = document.querySelector('.task-input')
+export const add = document.querySelector('.add');
+export const list = document.querySelector('.lists');
+
 
 reload.addEventListener('click' , () => {
   showTasks();
 })
 
-
-let taskList = JSON.parse(localStorage.getItem('data')) || [];
-let completed = false, index = 1;
-let listArr;
+export let taskList = JSON.parse(localStorage.getItem('data')) || [];
+export let completed = false, index = 1;
+export let listArr;
 
 showTasks();
 
@@ -34,8 +36,6 @@ add.addEventListener('click', () => {
   showTasks();
 })
 
-
-
 window.completeTask = function (index){
   let storedData = localStorage.getItem('data');
   listArr = JSON.parse(storedData);
@@ -53,35 +53,6 @@ window.completeTask = function (index){
   }
   localStorage.setItem('data', JSON.stringify(listArr));
   showTasks();
-}
-
-
-function showTasks(){
-  let storedData = localStorage.getItem('data');
-  //index = 0;
-  if (storedData === null) {
-    listArr = [];
-  }
-  else {
-    listArr = JSON.parse(storedData);
-    index = listArr.length + 1;
-  }
-
-  let newLiTag = '';
-  listArr.forEach((element) => {
-    newLiTag += `<li>
-       <div class="left">
-       <input type="checkbox" onclick="completeTask(${element.index});">
-       <input type="text" class="task" id="task${element.index}" value="${element.description}" readonly>
-       </div>
-       <div class="right">
-       <i class="fa-solid fa-pen-to-square edit " id="edit${element.index}" onclick="editTask(${element.index});"></i>
-       <i class="fa-solid fa-floppy-disk save hide" id="save${element.index}" onclick="saveTask(${element.index});"></i>
-       <i class="fa-solid fa-trash delete" onclick="deleteTask(${element.index});"></i>       
-</div>
-       </li><hr>`;
-  });
-  list.innerHTML = newLiTag;
 }
 
 
@@ -103,8 +74,6 @@ window.editTask = (index) => {
 
 }
 
-
-
 window.saveTask = (index) => {
   const saveBtn = document.getElementById("edit"+index+"");
   const editBtn = document.getElementById("save"+index+"");
@@ -124,46 +93,20 @@ window.saveTask = (index) => {
 
 
 //delete task function
-
-window.deleteTask =  (index) => {
-  let storedData = localStorage.getItem('data');
-  listArr = JSON.parse(storedData);
-  listArr.splice(index-1,1);
-  for (let i = 0 ; i < listArr.length ; i++) {
-    listArr[i].index = i+1;
-  }
-
-  localStorage.setItem('data', JSON.stringify(listArr));
-  showTasks();
-
-}
-
-
 //
-//
-// window.onload = () => {
-//   if (localStorage.getItem('data')) {
-//     taskList = JSON.parse(localStorage.getItem('data'));
+// window.deleteTask =  (index) => {
+//   let storedData = localStorage.getItem('data');
+//   listArr = JSON.parse(storedData);
+//   listArr.splice(index-1,1);
+//   for (let i = 0 ; i < listArr.length ; i++) {
+//     listArr[i].index = i+1;
 //   }
-//   for (let i = 0; i < taskList.length; i += 1) {
-//     list.innerHTML += `<li>
-//       <div class="left">
-//       <input type="checkbox" id="item${i}">
-//       <p>${taskList[i].description}</p>
-//       </div>
 //
-//       <div class="menu-pop">
-//       <i class="fa-solid fa-ellipsis-vertical more"></i>
-//       <button class="btn btn${i}" id="edit${i}">Edit</button>
-//       <button class="btn btn${i}" id="delete${i}">Delete</button>
-//         </div>
-//       </li>`
-//     const more = document.querySelector('.more');
-//     more.addEventListener('click', () => {
-//       document.querySelector('.btn').style.display = 'flex';
-//     });
-//   }
-//   };
+//   localStorage.setItem('data', JSON.stringify(listArr));
+//   showTasks();
+//
+// }
+
 
 
 
