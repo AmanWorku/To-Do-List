@@ -19,9 +19,10 @@ const showTasks = () => {
 
   let newLiTag = '';
   listArr.forEach((element) => {
-    newLiTag += `<li>
+    if (element.completed === true) {
+      newLiTag += `<li>
        <div class="left">
-       <input type="checkbox" onclick="completeTask(${element.index});">
+       <input type="checkbox" id="check${element.index}" onclick="completeTask(${element.index});" checked>
        <input type="text" class="task" id="task${element.index}" value="${element.description}" readonly>
        </div>
        <div class="right">
@@ -30,6 +31,21 @@ const showTasks = () => {
        <i class="fa-solid fa-trash delete" id="del" onclick="deleteTask(${element.index});"></i>       
 </div>
        </li><hr>`;
+      // const checkTask = document.getElementById('task${element.index}');
+      // checkTask.style.textDecoration = 'line-through';
+    } else {
+      newLiTag += `<li>
+       <div class="left">
+       <input type="checkbox" id="check${element.index}" onclick="completeTask(${element.index});">
+       <input type="text" class="task" id="task${element.index}" value="${element.description}" readonly>
+       </div>
+       <div class="right">
+       <i class="fa-solid fa-pen-to-square edit " id="edit${element.index}" onclick="editTask(${element.index});"></i>
+       <i class="fa-solid fa-floppy-disk save hide" id="save${element.index}" onclick="saveTask(${element.index});"></i>
+       <i class="fa-solid fa-trash delete" id="del" onclick="deleteTask(${element.index});"></i>       
+</div>
+       </li><hr>`;
+    }
   });
   list.innerHTML = newLiTag;
   newTask.focus();
@@ -90,18 +106,17 @@ function addT() {
 add.addEventListener('click', () => { addT(); });
 
 window.completeTask = (index) => {
-  const storedData = localStorage.getItem('data');
-  listArr = JSON.parse(storedData);
   for (let i = 0; i < listArr.length; i += 1) {
     if (listArr[i].index === index) {
       if (listArr[i].completed === false) {
         listArr[i].completed = true;
-        // addedTask.style.textDecoration = 'strikethrough';
-      } else { listArr[i].completed = false; }
-      // addedTask.style.textDecoration = 'none';
+        localStorage.setItem('data', JSON.stringify(listArr));
+      } else {
+        listArr[i].completed = false;
+      }
+      localStorage.setItem('data', JSON.stringify(listArr));
     }
   }
-  localStorage.setItem('data', JSON.stringify(listArr));
   showTasks();
 };
 
@@ -117,3 +132,16 @@ window.deleteTask = (index) => {
 };
 
 window.onload = showTasks();
+
+const clearCompleted = document.querySelector('.clear');
+
+clearCompleted.addEventListener('click', () => {
+  const storedData = localStorage.getItem('data');
+  let listArr = JSON.parse(storedData);
+  listArr = listArr.filter((element) => element.completed === false);
+  for (let i = 0; i < listArr.length; i += 1) {
+    listArr[i].index = i + 1;
+  }
+  localStorage.setItem('data', JSON.stringify(listArr));
+  showTasks();
+});
